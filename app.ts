@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import express from "express";
 import employeeRouter from "./employee_router";
 import loggerMiddleware from "./logger_middleware";

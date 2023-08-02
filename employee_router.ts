@@ -1,5 +1,7 @@
 import express from "express";
 import Employee from "./Employee";
+import { DataSource } from "typeorm";
+import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 
 const employeeRouter = express.Router();
 let count: number = 2;
@@ -19,15 +21,31 @@ const employees: Employee[] = [
         updatedAt: new Date(),
     },
 ];
-
 employeeRouter.get("/", (req, res) => {
     res.status(200).send(employees);
 });
 
-employeeRouter.get("/:id", (req, res) => {
-    const employee = employees.find((emp) => {
-        return emp.id === parseInt(req.params.id);
+employeeRouter.get("/:id", async (req, res) => {
+    const dataSource = new DataSource({
+        type: "postgres",
+        host: "localhost",
+        port: 8765,
+        username: "postgres",
+        password: "postgres",
+        database: "training",
+        entities: [Employee],
+        logging: true,
+        namingStrategy: new SnakeNamingStrategy(),
     });
+
+    await dataSource.initialize();
+
+    const employeeRepository = dataSource.getRepository(Employee);
+
+    const employee = await employeeRepository.findOneBy({
+        id: parseInt(req.params.id),
+    });
+
     res.status(200).send(employee);
 });
 
