@@ -1,13 +1,13 @@
 import express from "express";
+import employeeRouter from "./employee_router";
+import loggerMiddleware from "./logger_middleware";
 
 const server = express();
 
-server.get("/*", (req, res) => {
-  console.log(req.url);
-  res.writeHead(200);
-  res.end("Hello world Express TypeScript");
-});
+server.use(express.json());
+server.use(loggerMiddleware);
+server.use("/employees", employeeRouter);
 
 server.listen(3000, () => {
-  console.log("Server is listening to 3000");
+    console.log("Server is listening to 3000");
 });
