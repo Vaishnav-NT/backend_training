@@ -1,5 +1,8 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import EmployeeService from "../service/employee.service";
+import { plainToInstance } from "class-transformer";
+import CreateEmployeeDto from "../dto/create-employee.dto";
+import { validate } from "class-validator";
 
 class EmployeeController {
     public router: express.Router;
@@ -23,61 +26,77 @@ class EmployeeController {
         }
     };
 
-    findOneBy = async (req: express.Request, res: express.Response) => {
+    findOneBy = async (
+        req: express.Request,
+        res: express.Response,
+        next: NextFunction
+    ) => {
         try {
             const employee = await this.employeeService.findOneBy(
                 parseInt(req.params.id)
             );
             res.status(200).send(employee);
         } catch (e) {
-            res.status(500).send(e);
+            next(e);
         }
     };
 
-    create = async (req: express.Request, res: express.Response) => {
+    create = async (
+        req: express.Request,
+        res: express.Response,
+        next: NextFunction
+    ) => {
         try {
+            const createEmployeeDto = plainToInstance(
+                CreateEmployeeDto,
+                req.body
+            );
+
+            const errors = await validate(createEmployeeDto);
+            if (errors.length > 0) {
+                console.log(JSON.stringify(errors));
+            }
             const employee = await this.employeeService.create({
                 name: req.body.name,
                 email: req.body.email,
+                address: req.body.address,
             });
             res.status(201).send(employee);
         } catch (e) {
-            res.status(500).send(e);
+            next(e);
         }
     };
 
-    put = async (req: express.Request, res: express.Response) => {
+    put = async (
+        req: express.Request,
+        res: express.Response,
+        next: NextFunction
+    ) => {
         try {
             const employee = await this.employeeService.put(
                 parseInt(req.params.id),
                 {
                     name: req.body.name,
                     email: req.body.email,
+                    address: req.body.address,
                 }
             );
-            if (employee === false) {
-                res.status(404).send("ID does not exist");
-            } else {
-                res.status(200).send(employee);
-            }
+            res.status(201).send(employee);
         } catch (e) {
-            console.log(e);
-            res.status(500).send(e);
+            next(e);
         }
     };
 
-    delete = async (req: express.Request, res: express.Response) => {
+    delete = async (
+        req: express.Request,
+        res: express.Response,
+        next: NextFunction
+    ) => {
         try {
-            const result = await this.employeeService.delete(
-                parseInt(req.params.id)
-            );
-            if (result === false) {
-                res.status(404).send("ID does not exist");
-            } else {
-                res.status(204).send("Deleted successfully");
-            }
+            await this.employeeService.delete(parseInt(req.params.id));
+            res.status(201).send("Employee deleted successfully");
         } catch (e) {
-            res.status(500).send(e);
+            next(e);
         }
     };
 }

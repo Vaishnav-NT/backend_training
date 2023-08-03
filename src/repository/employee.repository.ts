@@ -5,11 +5,20 @@ class EmployeeRepository {
     constructor(private employeeRepository: Repository<Employee>) {}
 
     find(): Promise<Employee[]> {
-        return this.employeeRepository.find();
+        return this.employeeRepository.find({
+            relations: {
+                address: true,
+            },
+        });
     }
 
     findOneBy(id: number): Promise<Employee> {
-        return this.employeeRepository.findOneBy({ id: id });
+        return this.employeeRepository.findOne({
+            where: { id: id },
+            relations: {
+                address: true,
+            },
+        });
     }
 
     create(newEmployee: Employee): Promise<Employee> {
