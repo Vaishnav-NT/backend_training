@@ -1,29 +1,26 @@
 import express from "express";
 import Employee from "./Employee";
 import dataSource from "./data_source";
+import { FindOptionsSelect, FindOptionsWhere, ILike } from "typeorm";
 
 const employeeRouter = express.Router();
 const employeeRepository = dataSource.getRepository(Employee);
 
-let count: number = 2;
-const employees: Employee[] = [
-    {
-        id: 1,
-        name: "John",
-        email: "John23@gmail.com",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    },
-    {
-        id: 2,
-        name: "Jane",
-        email: "Jane11@gmail.com",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    },
-];
 employeeRouter.get("/", async (req, res) => {
-    const employees = await employeeRepository.find();
+    const namefilter = req.query.name as string;
+    const emaililter = req.query.email as string;
+
+    const qb = employeeRepository.createQueryBuilder();
+
+    if (namefilter) {
+        qb.andWhere("name LIKE :name", { name: `${namefilter}%` });
+    }
+
+    if (emaililter) {
+        qb.andWhere("email LIKE :email", { email: `%${emaililter}` });
+    }
+
+    const employees = await qb.getMany();
     res.status(200).send(employees);
 });
 
@@ -58,7 +55,7 @@ employeeRouter.delete("/:id", async (req, res) => {
     const employee = await employeeRepository.findOneBy({
         id: parseInt(req.params.id),
     });
-    await employeeRepository.remove(employee);
+    await employeeRepository.softRemove(employee);
     res.status(201).send("Employee deleted successfully");
 });
 
