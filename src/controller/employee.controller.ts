@@ -40,7 +40,7 @@ class EmployeeController {
                 name: req.body.name,
                 email: req.body.email,
             });
-            res.status(200).send(employee);
+            res.status(201).send(employee);
         } catch (e) {
             res.status(500).send(e);
         }
@@ -74,7 +74,7 @@ class EmployeeController {
             if (result === false) {
                 res.status(404).send("ID does not exist");
             } else {
-                res.status(200).send("Deleted successfully");
+                res.status(204).send("Deleted successfully");
             }
         } catch (e) {
             res.status(500).send(e);

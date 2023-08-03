@@ -15,6 +15,9 @@ class Employee {
     @Column()
     name: string;
 
+    @Column({ nullable: true })
+    age: number;
+
     @Column()
     email: string;
 
