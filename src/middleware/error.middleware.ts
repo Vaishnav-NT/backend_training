@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import HttpException from "../exception/http.exception";
 import { NextFunction } from "express";
+import ValidationException from "../exception/validation.exception";
 
 const errorHandlingMiddleware = (
     error: Error,
@@ -10,10 +11,15 @@ const errorHandlingMiddleware = (
 ) => {
     try {
         console.log(error.stack);
-        if (error instanceof HttpException) {
-            res.status(error.status).send({ error: error.message });
+        if (error instanceof ValidationException) {
+            res.status(error.status).send({
+                message: error.message,
+                ...error.errors,
+            });
+        } else if (error instanceof HttpException) {
+            res.status(error.status).send({ message: error.message });
         } else {
-            res.status(500).send({ error: error.message });
+            res.status(500).send({ message: error.message });
         }
     } catch (err) {
         next(err);

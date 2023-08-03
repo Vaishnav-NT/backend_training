@@ -6,8 +6,12 @@ import HttpException from "../exception/http.exception";
 class EmployeeService {
     constructor(private employeeRepository: EmployeeRepository) {}
 
-    find(): Promise<Employee[]> {
-        return this.employeeRepository.find();
+    async find(): Promise<Employee[]> {
+        const employees = await this.employeeRepository.find();
+        if (!employees) {
+            throw new HttpException(404, "No employee present");
+        }
+        return employees;
     }
 
     async findOneBy(id: number): Promise<Employee> {
