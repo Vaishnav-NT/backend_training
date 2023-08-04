@@ -14,7 +14,9 @@ const errorHandlingMiddleware = (
         if (error instanceof ValidationException) {
             res.status(error.status).send({
                 message: error.message,
-                ...error.errors,
+                errors: {
+                    ...error.errors,
+                },
             });
         } else if (error instanceof HttpException) {
             res.status(error.status).send({ message: error.message });
