@@ -7,9 +7,9 @@ import {
 } from "class-validator";
 import Address from "../entity/address.entity";
 import { Type } from "class-transformer";
-import CreateAddressDto from "./create-address.dto";
+import AddressDto from "./address.dto";
 
-class CreateEmployeeDto {
+class EmployeeDto {
     @IsNotEmpty()
     @IsString()
     name: string;
@@ -20,8 +20,8 @@ class CreateEmployeeDto {
 
     @IsNotEmpty()
     @ValidateNested({ each: true })
-    @Type(() => CreateAddressDto)
+    @Type(() => AddressDto)
     address: Address;
 }
 
-export default CreateEmployeeDto;
+export default EmployeeDto;

@@ -1,7 +1,7 @@
 import express, { NextFunction } from "express";
 import EmployeeService from "../service/employee.service";
 import { plainToInstance } from "class-transformer";
-import CreateEmployeeDto from "../dto/create-employee.dto";
+import EmployeeDto from "../dto/employee.dto";
 import { validate } from "class-validator";
 import ValidationException from "../exception/validation.exception";
 
@@ -51,11 +51,8 @@ class EmployeeController {
         next: NextFunction
     ) => {
         try {
-            const createEmployeeDto = plainToInstance(
-                CreateEmployeeDto,
-                req.body
-            );
-            const errors = await validate(createEmployeeDto);
+            const employeeDto = plainToInstance(EmployeeDto, req.body);
+            const errors = await validate(employeeDto);
             if (errors.length > 0) {
                 throw new ValidationException(errors, 400, "Validation Error");
             }
@@ -76,11 +73,8 @@ class EmployeeController {
         next: NextFunction
     ) => {
         try {
-            const createEmployeeDto = plainToInstance(
-                CreateEmployeeDto,
-                req.body
-            );
-            const errors = await validate(createEmployeeDto);
+            const employeeDto = plainToInstance(EmployeeDto, req.body);
+            const errors = await validate(employeeDto);
             if (errors.length > 0) {
                 throw new ValidationException(errors, 400, "Validation Error");
             }
