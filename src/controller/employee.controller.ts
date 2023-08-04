@@ -8,6 +8,15 @@ import authenticateMiddleware from "../middleware/authenticate.middleware";
 import authorizeMiddleware from "../middleware/authorize.middleware";
 
 // to : make use of dto and recheck status codes
+// authorize dynamic
+// list of roles kittan api
+//keep format
+// 90% test coverage in services
+// C -> S -> R, S -> S
+// handle all exceptions
+// logging with winston to a  file
+// env
+//
 
 class EmployeeController {
     public router: express.Router;

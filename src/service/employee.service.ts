@@ -63,7 +63,7 @@ class EmployeeService {
     loginEmployee = async (email: string, password: string) => {
         const employee = await this.employeeRepository.findOneByEmail(email);
         if (!employee) {
-            throw new HttpException(401, "Incorrect username or password");
+            throw new HttpException(400, "Employee not found");
         }
         const result = bcrypt.compare(password, employee.password);
         if (!result) {
@@ -76,8 +76,8 @@ class EmployeeService {
             role: employee.role,
         };
 
-        const token = jsonwebtoken.sign(payload, "ABCDE", {
-            expiresIn: "1h",
+        const token = jsonwebtoken.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: process.env.TOKEN_EXPIRE_TIME,
         });
 
         return { token };
