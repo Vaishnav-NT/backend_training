@@ -4,8 +4,8 @@ import HttpException from "./http.exception";
 class ValidationException extends HttpException {
     public errors: Object;
 
-    constructor(errors: ValidationError[], status: number, message: string) {
-        super(400, message);
+    constructor(errors: ValidationError[]) {
+        super(400, "Validation exception");
         this.errors = this.parseErrors(errors);
     }
 

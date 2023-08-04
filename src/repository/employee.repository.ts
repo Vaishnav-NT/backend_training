@@ -12,9 +12,18 @@ class EmployeeRepository {
         });
     }
 
-    findOneBy(id: number): Promise<Employee> {
+    findOneById(id: number): Promise<Employee> {
         return this.employeeRepository.findOne({
             where: { id: id },
+            relations: {
+                address: true,
+            },
+        });
+    }
+
+    findOneByEmail(email: string): Promise<Employee> {
+        return this.employeeRepository.findOne({
+            where: { email },
             relations: {
                 address: true,
             },

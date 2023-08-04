@@ -1,41 +1,28 @@
-import {
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    CreateDateColumn,
-    UpdateDateColumn,
-    DeleteDateColumn,
-    OneToOne,
-    ManyToOne,
-} from "typeorm";
+import { Entity, Column, OneToOne, ManyToOne } from "typeorm";
 import Address from "./address.entity";
-import Department from "./department.entity";
+//import Department from "./department.entity";
+import AbstractEntity from "./abstarct-entity";
+import { Role } from "../utils/role.enum";
 
 @Entity("employees")
-class Employee {
-    @PrimaryGeneratedColumn()
-    id: number;
-
+class Employee extends AbstractEntity {
     @Column()
     name: string;
 
     @Column()
     email: string;
 
-    @CreateDateColumn()
-    createdAt: Date;
+    @Column()
+    password: string;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
-
-    @DeleteDateColumn()
-    deletedAt: Date;
+    @Column({ default: Role.DEVELOPER })
+    role: Role;
 
     @OneToOne(() => Address, (address) => address.employee, { cascade: true })
     address: Address;
 
-    @ManyToOne(() => Department, (department) => department.employee)
-    department: Department;
+    // @ManyToOne(() => Department, (department) => department.employee)
+    // department: Department;
 }
 
 export default Employee;
