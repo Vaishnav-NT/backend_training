@@ -5,7 +5,8 @@ import EmployeeDto from "../dto/employee.dto";
 import { validate } from "class-validator";
 import ValidationException from "../exception/validation.exception";
 import authenticateMiddleware from "../middleware/authenticate.middleware";
-import authorizeMiddleware from "../middleware/authorize.middleware";
+import authorize from "../middleware/authorize.middleware";
+import { Role } from "../utils/role.enum";
 
 // to : make use of dto and recheck status codes
 // authorize dynamic
@@ -28,11 +29,21 @@ class EmployeeController {
         this.router.post(
             "/",
             authenticateMiddleware,
-            authorizeMiddleware,
+            authorize([Role.HR]),
             this.create
         );
-        this.router.put("/:id", this.put);
-        this.router.delete("/:id", this.delete);
+        this.router.put(
+            "/:id",
+            authenticateMiddleware,
+            authorize([Role.HR]),
+            this.put
+        );
+        this.router.delete(
+            "/:id",
+            authenticateMiddleware,
+            authorize([Role.HR]),
+            this.delete
+        );
         this.router.post("/login", this.loginEmployee);
     }
 
@@ -102,9 +113,9 @@ class EmployeeController {
             const employee = await this.employeeService.put(
                 parseInt(req.params.id),
                 {
-                    name: req.body.name,
-                    email: req.body.email,
-                    address: req.body.address,
+                    name: employeeDto.name,
+                    email: employeeDto.email,
+                    address: employeeDto.address,
                 }
             );
             res.status(201).send(employee);
