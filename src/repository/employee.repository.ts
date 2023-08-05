@@ -4,6 +4,10 @@ import Employee from "../entity/employee.entity";
 class EmployeeRepository {
     constructor(private employeeRepository: Repository<Employee>) {}
 
+    create(newEmployee: Employee): Promise<Employee> {
+        return this.employeeRepository.save(newEmployee);
+    }
+
     find(): Promise<Employee[]> {
         return this.employeeRepository.find({
             relations: {
@@ -30,11 +34,11 @@ class EmployeeRepository {
         });
     }
 
-    create(newEmployee: Employee): Promise<Employee> {
-        return this.employeeRepository.save(newEmployee);
+    put(updatedEmployee: Employee): Promise<Employee> {
+        return this.employeeRepository.save(updatedEmployee);
     }
 
-    put(updatedEmployee: Employee): Promise<Employee> {
+    patch(updatedEmployee: Employee): Promise<Employee> {
         return this.employeeRepository.save(updatedEmployee);
     }
 
