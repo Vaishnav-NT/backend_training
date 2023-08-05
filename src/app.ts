@@ -7,6 +7,7 @@ import loggerMiddleware from "./middleware/logger.middleware";
 import dataSource from "./db/postgres.db";
 import errorHandlingMiddleware from "./middleware/error.middleware";
 import departmentRoute from "./route/department.route";
+import roleRoute from "./route/role.route";
 
 const server = express();
 
@@ -14,6 +15,7 @@ server.use(express.json());
 server.use(loggerMiddleware);
 server.use("/api/employees", employeeRoute);
 server.use("/api/departments", departmentRoute);
+server.use("/api/roles", roleRoute);
 
 server.use(errorHandlingMiddleware);
 

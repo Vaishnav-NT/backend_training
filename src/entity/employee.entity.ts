@@ -2,7 +2,8 @@ import { Entity, Column, OneToOne, ManyToOne } from "typeorm";
 import Address from "./address.entity";
 import Department from "./department.entity";
 import AbstractEntity from "./abstarct-entity";
-import { Role } from "../utils/role.enum";
+import Role from "./role.entity";
+import { RoleEnum } from "../utils/role.enum";
 
 @Entity("employees")
 class Employee extends AbstractEntity {
@@ -21,7 +22,7 @@ class Employee extends AbstractEntity {
     @Column()
     experience: number;
 
-    @Column({ default: Role.DEVELOPER })
+    @ManyToOne(() => Role, (role) => role.employees)
     role: Role;
 
     @OneToOne(() => Address, (address) => address.employee, { cascade: true })

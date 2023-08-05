@@ -6,7 +6,7 @@ import { validate } from "class-validator";
 import ValidationException from "../exception/validation.exception";
 import authenticateMiddleware from "../middleware/authenticate.middleware";
 import authorize from "../middleware/authorize.middleware";
-import { Role } from "../utils/role.enum";
+import { RoleEnum } from "../utils/role.enum";
 import UpdateEmployeeDto from "../dto/updateEmployee.dto";
 import LoginEmployeeDto from "../dto/loginEmployee.dto";
 

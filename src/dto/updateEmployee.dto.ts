@@ -1,7 +1,7 @@
 import { ValidateIf } from "class-validator";
 import Address from "../entity/address.entity";
-import { Role } from "../utils/role.enum";
 import EmployeeDto from "./employee.dto";
+import Role from "../entity/role.entity";
 
 class UpdateEmployeeDto extends EmployeeDto {
     @ValidateIf((o) => o.value !== undefined)

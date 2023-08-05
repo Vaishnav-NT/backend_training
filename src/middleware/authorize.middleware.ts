@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
 import { RequestWithUser } from "../utils/requestWithUser";
-import { Role } from "../utils/role.enum";
 import HttpException from "../exception/http.exception";
+import Role from "../entity/role.entity";
 
 const authorize = (roles: Role[]) => {
     return (req: RequestWithUser, res: Response, next: NextFunction) => {

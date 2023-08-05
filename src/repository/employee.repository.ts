@@ -12,6 +12,7 @@ class EmployeeRepository {
         return this.employeeRepository.find({
             relations: {
                 address: true,
+                role: true,
             },
         });
     }
@@ -21,6 +22,7 @@ class EmployeeRepository {
             where: { id: id },
             relations: {
                 address: true,
+                role: true,
             },
         });
     }
@@ -30,13 +32,10 @@ class EmployeeRepository {
             where: { username },
             relations: {
                 address: true,
+                role: true,
             },
         });
     }
-
-    // put(updatedEmployee: Employee): Promise<Employee> {
-    //     return this.employeeRepository.save(updatedEmployee);
-    // }
 
     patch(updatedEmployee: Employee): Promise<Employee> {
         return this.employeeRepository.save(updatedEmployee);

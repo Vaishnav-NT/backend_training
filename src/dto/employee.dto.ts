@@ -10,7 +10,9 @@ import {
 import Address from "../entity/address.entity";
 import { Type } from "class-transformer";
 import AddressDto from "./address.dto";
-import { Role } from "../utils/role.enum";
+import { RoleEnum } from "../utils/role.enum";
+import RoleDto from "./role.dto";
+import Role from "../entity/role.entity";
 
 class EmployeeDto {
     @IsNotEmpty()
@@ -31,7 +33,8 @@ class EmployeeDto {
     password: string;
 
     @IsNotEmpty()
-    @IsEnum(Role)
+    @ValidateNested({ each: true })
+    @Type(() => RoleDto)
     role: Role;
 
     @IsNotEmpty()
