@@ -21,6 +21,12 @@ class UpdateEmployeeDto extends EmployeeDto {
 
     @ValidateIf((o) => o.value !== undefined)
     role: Role;
+
+    @ValidateIf((o) => o.value !== undefined)
+    joiningDate: string;
+
+    @ValidateIf((o) => o.value !== undefined)
+    experience: number;
 }
 
 export default UpdateEmployeeDto;

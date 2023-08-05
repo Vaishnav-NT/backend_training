@@ -34,9 +34,9 @@ class EmployeeRepository {
         });
     }
 
-    put(updatedEmployee: Employee): Promise<Employee> {
-        return this.employeeRepository.save(updatedEmployee);
-    }
+    // put(updatedEmployee: Employee): Promise<Employee> {
+    //     return this.employeeRepository.save(updatedEmployee);
+    // }
 
     patch(updatedEmployee: Employee): Promise<Employee> {
         return this.employeeRepository.save(updatedEmployee);

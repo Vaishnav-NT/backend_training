@@ -15,6 +15,12 @@ class Employee extends AbstractEntity {
     @Column()
     password: string;
 
+    @Column()
+    joiningDate: string;
+
+    @Column()
+    experience: number;
+
     @Column({ default: Role.DEVELOPER })
     role: Role;
 

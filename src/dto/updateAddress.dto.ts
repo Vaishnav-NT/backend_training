@@ -3,10 +3,23 @@ import AddressDto from "./address.dto";
 
 class UpdateAddressDto extends AddressDto {
     @ValidateIf((o) => o.value !== undefined)
-    line1: string;
+    address_line_1: string;
 
     @ValidateIf((o) => o.value !== undefined)
-    pincode: number;
+    address_line_2: string;
+
+    @ValidateIf((o) => o.value !== undefined)
+    city: string;
+
+    @ValidateIf((o) => o.value !== undefined)
+    state: string;
+
+    @ValidateIf((o) => o.value !== undefined)
+    country: string;
+
+    @ValidateIf((o) => o.value !== undefined)
+    pincode: string;
+
 }
 
 export default UpdateAddressDto;

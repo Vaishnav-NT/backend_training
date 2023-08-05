@@ -2,6 +2,7 @@ import {
     IsEmail,
     IsEnum,
     IsNotEmpty,
+    IsNumber,
     IsString,
     ValidateNested,
     validate,
@@ -32,6 +33,14 @@ class EmployeeDto {
     @IsNotEmpty()
     @IsEnum(Role)
     role: Role;
+
+    @IsNotEmpty()
+    @IsString()
+    joiningDate: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    experience: number;
 }
 
 export default EmployeeDto;

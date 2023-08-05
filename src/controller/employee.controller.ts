@@ -36,12 +36,12 @@ class EmployeeController {
         this.router.post("/login", this.loginEmployee);
         this.router.get("/", this.find); // authenticateMiddleware,
         this.router.get("/:id", this.findOneBy); // authenticateMiddleware,
-        this.router.put(
-            "/:id",
-            // authenticateMiddleware,
-            // authorize([Role.HR]),
-            this.put
-        );
+        // this.router.put(
+        //     "/:id",
+        //     // authenticateMiddleware,
+        //     // authorize([Role.HR]),
+        //     this.put
+        // );
         this.router.patch(
             "/:id",
             // authenticateMiddleware,
@@ -62,15 +62,17 @@ class EmployeeController {
         next: NextFunction
     ) => {
         try {
-            const employeeDto: EmployeeDto = plainToInstance(
+            const createEmployeeDto: EmployeeDto = plainToInstance(
                 EmployeeDto,
                 req.body
             );
-            const errors = await validate(employeeDto);
+            const errors = await validate(createEmployeeDto);
             if (errors.length > 0) {
                 throw new ValidationException(errors);
             }
-            const employee = await this.employeeService.create(employeeDto);
+            const employee = await this.employeeService.create(
+                createEmployeeDto
+            );
             res.status(201).send(employee);
         } catch (e) {
             next(e);
@@ -121,30 +123,30 @@ class EmployeeController {
         }
     };
 
-    put = async (
-        req: express.Request,
-        res: express.Response,
-        next: NextFunction
-    ) => {
-        try {
-            const employeeDto = plainToInstance(EmployeeDto, req.body);
-            const errors = await validate(employeeDto);
-            if (errors.length > 0) {
-                throw new ValidationException(errors);
-            }
-            const employee = await this.employeeService.put(
-                parseInt(req.params.id),
-                {
-                    name: employeeDto.name,
-                    email: employeeDto.email,
-                    address: employeeDto.address,
-                }
-            );
-            res.status(201).send(employee);
-        } catch (e) {
-            next(e);
-        }
-    };
+    // put = async (
+    //     req: express.Request,
+    //     res: express.Response,
+    //     next: NextFunction
+    // ) => {
+    //     try {
+    //         const employeeDto = plainToInstance(EmployeeDto, req.body);
+    //         const errors = await validate(employeeDto);
+    //         if (errors.length > 0) {
+    //             throw new ValidationException(errors);
+    //         }
+    //         const employee = await this.employeeService.put(
+    //             parseInt(req.params.id),
+    //             {
+    //                 name: employeeDto.name,
+    //                 email: employeeDto.email,
+    //                 address: employeeDto.address,
+    //             }
+    //         );
+    //         res.status(201).send(employee);
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // };
 
     patch = async (
         req: express.Request,
@@ -152,17 +154,17 @@ class EmployeeController {
         next: NextFunction
     ) => {
         try {
-            const employeeDto: UpdateEmployeeDto = plainToInstance(
+            const updateEmployeeDto: UpdateEmployeeDto = plainToInstance(
                 UpdateEmployeeDto,
                 req.body
             );
-            const errors = await validate(employeeDto);
+            const errors = await validate(updateEmployeeDto);
             if (errors.length > 0) {
                 throw new ValidationException(errors);
             }
             const employee = await this.employeeService.patch(
                 parseInt(req.params.id),
-                employeeDto
+                updateEmployeeDto
             );
             res.status(201).send(employee);
         } catch (e) {
