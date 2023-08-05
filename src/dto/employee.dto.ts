@@ -18,8 +18,8 @@ class EmployeeDto {
     name: string;
 
     @IsNotEmpty()
-    @IsEmail()
-    email: string;
+    @IsString()
+    username: string;
 
     @IsNotEmpty()
     @ValidateNested({ each: true })

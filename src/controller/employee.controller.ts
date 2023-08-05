@@ -35,7 +35,7 @@ class EmployeeController {
         );
         this.router.post("/login", this.loginEmployee);
         this.router.get("/", this.find); // authenticateMiddleware,
-        this.router.get("/:id", this.findOneBy); // authenticateMiddleware,
+        this.router.get("/:id", this.findOneById); // authenticateMiddleware,
         // this.router.put(
         //     "/:id",
         //     // authenticateMiddleware,
@@ -108,7 +108,7 @@ class EmployeeController {
         }
     };
 
-    findOneBy = async (
+    findOneById = async (
         req: express.Request,
         res: express.Response,
         next: NextFunction

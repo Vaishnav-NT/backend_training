@@ -8,9 +8,6 @@ class UpdateEmployeeDto extends EmployeeDto {
     name: string;
 
     @ValidateIf((o) => o.value !== undefined)
-    email: string;
-
-    @ValidateIf((o) => o.value !== undefined)
     username: string;
 
     @ValidateIf((o) => o.value !== undefined)

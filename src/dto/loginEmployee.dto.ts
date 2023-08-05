@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 class LoginEmployeeDto {
     @IsNotEmpty()
     @IsString()
-    email: string;
+    username: string;
 
     @IsNotEmpty()
     @IsString()

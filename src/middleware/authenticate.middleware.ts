@@ -15,7 +15,7 @@ const authenticateMiddleware = (
             "ABCDE"
         ) as jwtPayload;
         req.name = payload.name;
-        req.email = payload.email;
+        req.username = payload.username;
         req.role = payload.role;
         next();
     } catch (e) {

@@ -15,7 +15,7 @@ class EmployeeService {
     async create(employeeData: EmployeeDto): Promise<Employee> {
         const newEmployee = new Employee();
         newEmployee.name = employeeData.name;
-        newEmployee.email = employeeData.email;
+        newEmployee.username = employeeData.username;
         newEmployee.password = await hash(employeeData.password, 10);
         newEmployee.role = employeeData.role;
         newEmployee.joiningDate = employeeData.joiningDate;
@@ -33,8 +33,8 @@ class EmployeeService {
     }
 
     loginEmployee = async (loginData: LoginEmployeeDto) => {
-        const employee = await this.employeeRepository.findOneByEmail(
-            loginData.email
+        const employee = await this.employeeRepository.findOneByUsername(
+            loginData.username
         );
         if (!employee) {
             throw new HttpException(400, "Employee not found");
@@ -46,7 +46,7 @@ class EmployeeService {
 
         const payload: jwtPayload = {
             name: employee.name,
-            email: employee.email,
+            username: employee.username,
             role: employee.role,
         };
 

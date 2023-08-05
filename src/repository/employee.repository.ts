@@ -1,4 +1,4 @@
-import { DataSource, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import Employee from "../entity/employee.entity";
 
 class EmployeeRepository {
@@ -25,9 +25,9 @@ class EmployeeRepository {
         });
     }
 
-    findOneByEmail(email: string): Promise<Employee> {
+    findOneByUsername(username: string): Promise<Employee> {
         return this.employeeRepository.findOne({
-            where: { email },
+            where: { username },
             relations: {
                 address: true,
             },
