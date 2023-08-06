@@ -2,7 +2,6 @@ import RoleDto from "../dto/role.dto";
 import Role from "../entity/role.entity";
 import HttpException from "../exception/http.exception";
 import RoleRepository from "../repository/role.repository";
-import { RoleEnum } from "../utils/role.enum";
 
 class RoleService {
     constructor(private roleRepository: RoleRepository) {}
@@ -13,12 +12,12 @@ class RoleService {
         return this.roleRepository.create(role);
     }
 
-    async find() {
-        const roles = await this.roleRepository.find();
+    async find(): Promise<[Role[], number]> {
+        const [roles, count] = await this.roleRepository.find();
         if (!roles) {
             throw new HttpException(404, `No roles found`);
         }
-        return roles;
+        return [roles, count];
     }
 
     async findOneByName(name: string) {
@@ -52,6 +51,10 @@ class RoleService {
             throw new HttpException(404, `No roles found with ${id}`);
         }
         return this.roleRepository.delete(role);
+    }
+
+    async count(): Promise<number> {
+        return await this.roleRepository.count();
     }
 }
 

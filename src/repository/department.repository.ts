@@ -8,8 +8,8 @@ class DepartmentRepository {
         return this.departmentRepository.save(newDepartment);
     }
 
-    find(): Promise<Department[]> {
-        return this.departmentRepository.find();
+    find(): Promise<[Department[], number]> {
+        return this.departmentRepository.findAndCount();
     }
 
     findById(id: number): Promise<Department> {
@@ -24,6 +24,10 @@ class DepartmentRepository {
 
     delete(deletedDepartment: Department): Promise<Department> {
         return this.departmentRepository.softRemove(deletedDepartment);
+    }
+
+    count(): Promise<number> {
+        return this.departmentRepository.count();
     }
 }
 

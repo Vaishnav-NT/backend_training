@@ -8,10 +8,21 @@ class EmployeeRepository {
         return this.employeeRepository.save(newEmployee);
     }
 
-    find(): Promise<Employee[]> {
-        return this.employeeRepository.find({
+    find(): Promise<[Employee[], number]> {
+        return this.employeeRepository.findAndCount({
             relations: {
                 address: true,
+                department: true,
+                role: true,
+            },
+        });
+    }
+
+    count(): Promise<number> {
+        return this.employeeRepository.count({
+            relations: {
+                address: true,
+                department: true,
                 role: true,
             },
         });
@@ -22,6 +33,7 @@ class EmployeeRepository {
             where: { id: id },
             relations: {
                 address: true,
+                department: true,
                 role: true,
             },
         });
@@ -32,6 +44,7 @@ class EmployeeRepository {
             where: { username },
             relations: {
                 address: true,
+                department: true,
                 role: true,
             },
         });
@@ -41,8 +54,8 @@ class EmployeeRepository {
         return this.employeeRepository.save(updatedEmployee);
     }
 
-    delete(employee: Employee): void {
-        this.employeeRepository.softRemove(employee);
+    delete(employee: Employee): Promise<Employee> {
+        return this.employeeRepository.softRemove(employee);
     }
 }
 

@@ -12,12 +12,12 @@ class DepartmentService {
         return this.departmentRepository.create(department);
     };
 
-    find = async (): Promise<Department[]> => {
-        const departments = this.departmentRepository.find();
+    find = async (): Promise<[Department[], number]> => {
+        const [departments, count] = await this.departmentRepository.find();
         if (!departments) {
             throw new HttpException(404, `No departments present`);
         }
-        return departments;
+        return [departments, count];
     };
 
     findOneById = async (id: number): Promise<Department> => {
@@ -72,6 +72,10 @@ class DepartmentService {
         }
         return this.departmentRepository.delete(department);
     };
+
+    async count(): Promise<number> {
+        return await this.departmentRepository.count();
+    }
 }
 
 export default DepartmentService;

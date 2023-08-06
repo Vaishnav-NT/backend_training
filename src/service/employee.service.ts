@@ -30,12 +30,9 @@ class EmployeeService {
             newEmployee.department = department;
         }
 
-        console.log(employeeData);
         if (employeeData.role !== undefined) {
             const role = await roleService.findOneByName(employeeData.role);
             newEmployee.role = role;
-            console.log("Here");
-            console.log(newEmployee.role);
         }
 
         const newAddress = new Address();
@@ -73,15 +70,17 @@ class EmployeeService {
             expiresIn: process.env.TOKEN_EXPIRE_TIME,
         });
 
-        return { token };
+        console.log(token);
+        return employee;
+        // return { token };
     };
 
-    async find(): Promise<Employee[]> {
-        const employees = await this.employeeRepository.find();
+    async find(): Promise<[Employee[], number]> {
+        const [employees, count] = await this.employeeRepository.find();
         if (!employees) {
             throw new HttpException(404, "No employee present");
         }
-        return employees;
+        return [employees, count];
     }
 
     async findOneBy(id: number): Promise<Employee> {
@@ -90,6 +89,10 @@ class EmployeeService {
             throw new HttpException(404, `Employee not found with ${id}`);
         }
         return employee;
+    }
+
+    async count(): Promise<number> {
+        return await this.employeeRepository.count();
     }
 
     async patch(id: number, data: UpdateEmployeeDto): Promise<Employee> {
@@ -102,7 +105,7 @@ class EmployeeService {
         return this.employeeRepository.patch(employee);
     }
 
-    async delete(id: number): Promise<void> {
+    async delete(id: number): Promise<Employee> {
         const employee = await this.employeeRepository.findOneById(id);
         if (!employee) {
             throw new HttpException(404, `Employee not found with ${id}`);

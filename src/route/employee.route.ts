@@ -12,3 +12,4 @@ const employeeController = new EmployeeController(employeeService);
 const employeeRoute = employeeController.router;
 
 export default employeeRoute;
+export { employeeService };

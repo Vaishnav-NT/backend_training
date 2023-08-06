@@ -1,6 +1,5 @@
 import { Repository } from "typeorm";
 import Role from "../entity/role.entity";
-import { RoleEnum } from "../utils/role.enum";
 
 class RoleRepository {
     constructor(private roleRepository: Repository<Role>) {}
@@ -9,8 +8,8 @@ class RoleRepository {
         return this.roleRepository.save(role);
     }
 
-    find(): Promise<Role[]> {
-        return this.roleRepository.find();
+    find(): Promise<[Role[], number]> {
+        return this.roleRepository.findAndCount();
     }
 
     findOneByName(name: string): Promise<Role> {
@@ -31,6 +30,10 @@ class RoleRepository {
 
     delete(roleToBeDeleted: Role): Promise<Role> {
         return this.roleRepository.softRemove(roleToBeDeleted);
+    }
+
+    count(): Promise<number> {
+        return this.roleRepository.count();
     }
 }
 

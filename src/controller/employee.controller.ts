@@ -8,6 +8,8 @@ import authenticateMiddleware from "../middleware/authenticate.middleware";
 import authorize from "../middleware/authorize.middleware";
 import UpdateEmployeeDto from "../dto/updateEmployee.dto";
 import LoginEmployeeDto from "../dto/loginEmployee.dto";
+import FormattedResponse from "../utils/formattedResponse";
+import { RequestWithStartTime } from "../utils/requestWithStartTime";
 
 // to : make use of dto and recheck status codes
 // authorize dynamic
@@ -29,8 +31,8 @@ class EmployeeController {
 
         this.router.post(
             "/",
-            authenticateMiddleware,
-            authorize(["admin"]),
+            // authenticateMiddleware,
+            // authorize(["admin"]),
             this.create
         );
         this.router.post("/login", this.loginEmployee);
@@ -51,10 +53,11 @@ class EmployeeController {
     }
 
     create = async (
-        req: express.Request,
+        req: RequestWithStartTime,
         res: express.Response,
         next: NextFunction
     ) => {
+        req.startTime = new Date();
         try {
             const createEmployeeDto: EmployeeDto = plainToInstance(
                 EmployeeDto,
@@ -67,62 +70,66 @@ class EmployeeController {
             const employee = await this.employeeService.create(
                 createEmployeeDto
             );
-            res.status(201).send(employee);
+            FormattedResponse.send(req, res, 201, employee, 1);
         } catch (e) {
             next(e);
         }
     };
 
     loginEmployee = async (
-        req: express.Request,
+        req: RequestWithStartTime,
         res: express.Response,
         next: NextFunction
     ) => {
+        req.startTime = new Date();
         const loinEmployeeDto = plainToInstance(LoginEmployeeDto, req.body);
         try {
             const token = await this.employeeService.loginEmployee(
                 loinEmployeeDto
             );
-            res.status(200).send({ data: token });
+            FormattedResponse.send(req, res, 201, token, 1);
         } catch (e) {
             next(e);
         }
     };
 
     find = async (
-        req: express.Request,
+        req: RequestWithStartTime,
         res: express.Response,
         next: NextFunction
     ) => {
         try {
-            const employees = await this.employeeService.find();
-            res.status(200).send(employees);
+            req.startTime = new Date();
+            const [employees, count] = await this.employeeService.find();
+            FormattedResponse.send(req, res, 200, employees, count);
         } catch (e) {
             next(e);
         }
     };
 
     findOneById = async (
-        req: express.Request,
+        req: RequestWithStartTime,
         res: express.Response,
         next: NextFunction
     ) => {
         try {
+            req.startTime = new Date();
             const employee = await this.employeeService.findOneBy(
                 parseInt(req.params.id)
             );
-            res.status(200).send(employee);
+            FormattedResponse.send(req, res, 200, employee, 1);
         } catch (e) {
             next(e);
         }
     };
 
     patch = async (
-        req: express.Request,
+        req: RequestWithStartTime,
         res: express.Response,
         next: NextFunction
     ) => {
         try {
+            req.startTime = new Date();
             const updateEmployeeDto: UpdateEmployeeDto = plainToInstance(
                 UpdateEmployeeDto,
                 req.body
@@ -135,20 +142,23 @@ class EmployeeController {
                 parseInt(req.params.id),
                 updateEmployeeDto
             );
-            res.status(201).send(employee);
+            FormattedResponse.send(req, res, 201, employee, 1);
         } catch (e) {
             next(e);
         }
     };
 
     delete = async (
-        req: express.Request,
+        req: RequestWithStartTime,
         res: express.Response,
         next: NextFunction
     ) => {
         try {
-            await this.employeeService.delete(parseInt(req.params.id));
-            res.status(201).send("Employee deleted successfully");
+            req.startTime = new Date();
+            const employee = await this.employeeService.delete(
+                parseInt(req.params.id)
+            );
+            FormattedResponse.send(req, res, 200, employee, 1);
         } catch (e) {
             next(e);
         }
