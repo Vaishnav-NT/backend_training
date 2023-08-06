@@ -3,7 +3,7 @@ import Address from "./address.entity";
 import Department from "./department.entity";
 import AbstractEntity from "./abstarct-entity";
 import Role from "./role.entity";
-import { RoleEnum } from "../utils/role.enum";
+import { activityStatusEnum } from "../utils/activityStatus.enum";
 
 @Entity("employees")
 class Employee extends AbstractEntity {
@@ -22,13 +22,16 @@ class Employee extends AbstractEntity {
     @Column()
     experience: number;
 
-    @ManyToOne(() => Role, (role) => role.employees)
+    @Column()
+    activityStatus: boolean;
+
+    @ManyToOne(() => Role, { nullable: true })
     role: Role;
 
     @OneToOne(() => Address, (address) => address.employee, { cascade: true })
     address: Address;
 
-    @ManyToOne(() => Department, (department) => department.employee)
+    @ManyToOne(() => Department, { nullable: true })
     department: Department;
 }
 

@@ -2,12 +2,12 @@ import RoleDto from "../dto/role.dto";
 import Role from "../entity/role.entity";
 import HttpException from "../exception/http.exception";
 import RoleRepository from "../repository/role.repository";
+import { RoleEnum } from "../utils/role.enum";
 
 class RoleService {
     constructor(private roleRepository: RoleRepository) {}
 
     async create(roleData: RoleDto) {
-        console.log("-----------", roleData);
         const role = new Role();
         role.name = roleData.name;
         return this.roleRepository.create(role);
@@ -21,10 +21,18 @@ class RoleService {
         return roles;
     }
 
+    async findOneByName(name: string) {
+        const role = await this.roleRepository.findOneByName(name);
+        if (!role) {
+            throw new HttpException(404, `No role found with ${name}`);
+        }
+        return role;
+    }
+
     async findOneByID(id: number) {
         const role = await this.roleRepository.findOneByID(id);
         if (!role) {
-            throw new HttpException(404, `No roles found`);
+            throw new HttpException(404, `No roles found with ${id}`);
         }
         return role;
     }
@@ -32,7 +40,7 @@ class RoleService {
     async put(id: number, updatedRoleData: RoleDto) {
         const role = await this.roleRepository.findOneByID(id);
         if (!role) {
-            throw new HttpException(404, `No roles found`);
+            throw new HttpException(404, `No roles found with ${id}`);
         }
         role.name = updatedRoleData.name;
         return role;
@@ -41,9 +49,9 @@ class RoleService {
     async delete(id: number) {
         const role = await this.roleRepository.findOneByID(id);
         if (!role) {
-            throw new HttpException(404, `No roles found`);
+            throw new HttpException(404, `No roles found with ${id}`);
         }
-        return role;
+        return this.roleRepository.delete(role);
     }
 }
 

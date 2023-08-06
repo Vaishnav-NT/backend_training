@@ -6,7 +6,7 @@ import { RoleEnum } from "../utils/role.enum";
 @Entity()
 class Role extends AbstractEntity {
     @Column()
-    name: RoleEnum;
+    name: string;
 
     @OneToMany(() => Employee, (employee) => employee.role)
     employees: Employee[];

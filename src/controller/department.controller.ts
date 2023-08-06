@@ -6,47 +6,39 @@ import ValidationException from "../exception/validation.exception";
 import DepartmentService from "../service/department.service";
 import Department from "../entity/department.entity";
 import UpdateDepartmentDto from "../dto/updateDepartment.dto";
+import authenticateMiddleware from "../middleware/authenticate.middleware";
+import authorize from "../middleware/authorize.middleware";
 
 class DepartmentController {
     public router: express.Router;
-
-    // constructor(private departmentService: DepartmentService) {
-    //     this.router = express.Router();
-
-    //     this.router.post("/:id", this.create);
-    //     this.router.get("/", this.find);
-    //     this.router.get("/:id", this.findById);
-    //     this.router.patch("/:id", this.patch);
-    //     this.router.delete("/:id", this.delete);
-    // }
 
     constructor(private departmentService: DepartmentService) {
         this.router = express.Router();
 
         this.router.post(
             "/",
-            // authenticateMiddleware,
-            // authorize([Role.HR]),
+            authenticateMiddleware,
+            authorize(["admin"]),
             this.create
         );
-        this.router.get("/", this.find); // authenticateMiddleware,
-        this.router.get("/:id", this.findOneById); // authenticateMiddleware,
+        this.router.get("/", authenticateMiddleware, this.find);
+        this.router.get("/:id", authenticateMiddleware, this.findOneById);
         this.router.put(
             "/:id",
-            // authenticateMiddleware,
-            // authorize([Role.HR]),
+            authenticateMiddleware,
+            authorize(["admin"]),
             this.put
         );
         this.router.patch(
             "/:id",
-            // authenticateMiddleware,
-            // authorize([Role.HR]),
+            authenticateMiddleware,
+            authorize(["admin"]),
             this.patch
         );
         this.router.delete(
             "/:id",
-            // authenticateMiddleware,
-            // authorize([Role.HR]),
+            authenticateMiddleware,
+            authorize(["admin"]),
             this.delete
         );
     }
@@ -134,7 +126,8 @@ class DepartmentController {
 
     delete = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            this.departmentService.delete(parseInt(req.params.id));
+            await this.departmentService.delete(parseInt(req.params.id));
+            res.status(201).send("Employee deleted successfully");
         } catch (e) {
             next(e);
         }

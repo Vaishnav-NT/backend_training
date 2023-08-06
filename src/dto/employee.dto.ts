@@ -1,9 +1,11 @@
 import {
+    IsDateString,
     IsEmail,
     IsEnum,
     IsNotEmpty,
     IsNumber,
     IsString,
+    ValidateIf,
     ValidateNested,
     validate,
 } from "class-validator";
@@ -11,8 +13,7 @@ import Address from "../entity/address.entity";
 import { Type } from "class-transformer";
 import AddressDto from "./address.dto";
 import { RoleEnum } from "../utils/role.enum";
-import RoleDto from "./role.dto";
-import Role from "../entity/role.entity";
+import { activityStatusEnum } from "../utils/activityStatus.enum";
 
 class EmployeeDto {
     @IsNotEmpty()
@@ -32,10 +33,13 @@ class EmployeeDto {
     @IsString()
     password: string;
 
-    @IsNotEmpty()
-    @ValidateNested({ each: true })
-    @Type(() => RoleDto)
-    role: Role;
+    @ValidateIf((o) => o.value !== undefined)
+    //@IsEnum(RoleEnum)
+    role: string;
+
+    @ValidateIf((o) => o.value !== undefined)
+    @IsString()
+    departmentId: string;
 
     @IsNotEmpty()
     @IsString()
@@ -44,6 +48,9 @@ class EmployeeDto {
     @IsNotEmpty()
     @IsNumber()
     experience: number;
+
+    @ValidateIf((o) => o.value !== undefined)
+    activityStatus: activityStatusEnum;
 }
 
 export default EmployeeDto;

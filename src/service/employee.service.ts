@@ -8,6 +8,8 @@ import EmployeeDto from "../dto/employee.dto";
 import { jwtPayload } from "../utils/jwtPayload.type";
 import UpdateEmployeeDto from "../dto/updateEmployee.dto";
 import LoginEmployeeDto from "../dto/loginEmployee.dto";
+import { roleService } from "../route/role.route";
+import { departmentService } from "../route/department.route";
 
 class EmployeeService {
     constructor(private employeeRepository: EmployeeRepository) {}
@@ -17,9 +19,25 @@ class EmployeeService {
         newEmployee.name = employeeData.name;
         newEmployee.username = employeeData.username;
         newEmployee.password = await hash(employeeData.password, 10);
-        newEmployee.role = employeeData.role;
         newEmployee.joiningDate = employeeData.joiningDate;
         newEmployee.experience = employeeData.experience;
+        newEmployee.activityStatus = true;
+
+        if (employeeData.departmentId) {
+            const department = await departmentService.findOneById(
+                parseInt(employeeData.departmentId)
+            );
+            newEmployee.department = department;
+        }
+
+        console.log(employeeData);
+        if (employeeData.role !== undefined) {
+            const role = await roleService.findOneByName(employeeData.role);
+            newEmployee.role = role;
+            console.log("Here");
+            console.log(newEmployee.role);
+        }
+
         const newAddress = new Address();
         newAddress.address_line_1 = employeeData.address.address_line_1;
         newAddress.address_line_2 = employeeData.address.address_line_2;
@@ -27,8 +45,8 @@ class EmployeeService {
         newAddress.state = employeeData.address.state;
         newAddress.country = employeeData.address.country;
         newAddress.pincode = employeeData.address.pincode;
-
         newEmployee.address = newAddress;
+
         return this.employeeRepository.create(newEmployee);
     }
 
@@ -43,11 +61,12 @@ class EmployeeService {
         if (!result) {
             throw new HttpException(401, "Incorrect username or password");
         }
+        console.log(employee.role.name);
 
         const payload: jwtPayload = {
             name: employee.name,
             username: employee.username,
-            role: employee.role,
+            role: employee.role.name,
         };
 
         const token = jsonwebtoken.sign(payload, process.env.JWT_SECRET, {
@@ -72,18 +91,6 @@ class EmployeeService {
         }
         return employee;
     }
-
-    // async put(id: number, data): Promise<Employee> {
-    //     const employee = await this.employeeRepository.findOneById(id);
-    //     if (!employee) {
-    //         throw new HttpException(404, `Employee not found with ${id}`);
-    //     }
-    //     employee.name = data.name;
-    //     employee.email = data.email;
-    //     employee.address.address_line_1 = data.address.address_line_1;
-    //     employee.address.pincode = data.address.pincode;
-    //     return this.employeeRepository.put(employee);
-    // }
 
     async patch(id: number, data: UpdateEmployeeDto): Promise<Employee> {
         const employee = await this.employeeRepository.findOneById(id);

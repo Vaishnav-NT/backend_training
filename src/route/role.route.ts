@@ -11,3 +11,4 @@ const roleController = new RoleController(roleService);
 const roleRoute = roleController.router;
 
 export default roleRoute;
+export { roleService };

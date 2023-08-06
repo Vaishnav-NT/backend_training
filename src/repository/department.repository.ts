@@ -22,8 +22,8 @@ class DepartmentRepository {
         return this.departmentRepository.save(updatedDepartment);
     }
 
-    delete(deletedDepartment: Department): void {
-        this.departmentRepository.softDelete(deletedDepartment);
+    delete(deletedDepartment: Department): Promise<Department> {
+        return this.departmentRepository.softRemove(deletedDepartment);
     }
 }
 

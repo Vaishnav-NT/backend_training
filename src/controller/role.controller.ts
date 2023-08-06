@@ -5,14 +5,34 @@ import RoleDto from "../dto/role.dto";
 import { validate } from "class-validator";
 import ValidationException from "../exception/validation.exception";
 import UpdateRoleDto from "../dto/updateRole.dto";
+import authenticateMiddleware from "../middleware/authenticate.middleware";
+import authorize from "../middleware/authorize.middleware";
 
 class RoleController {
     public router: express.Router;
     constructor(private roleService: RoleService) {
         this.router = express.Router();
 
-        this.router.post("/", this.create);
-        this.router.get("/", this.find);
+        this.router.post(
+            "/",
+            authenticateMiddleware,
+            authorize(["admin"]),
+            this.create
+        );
+        this.router.get("/", authenticateMiddleware, this.find);
+        this.router.get("/:id", authenticateMiddleware, this.findOneById);
+        this.router.put(
+            "/:id",
+            authenticateMiddleware,
+            authorize(["admin"]),
+            this.put
+        );
+        this.router.delete(
+            "/:id",
+            authenticateMiddleware,
+            authorize(["admin"]),
+            this.delete
+        );
     }
 
     create = async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +43,7 @@ class RoleController {
                 throw new ValidationException(errors);
             }
             const role = await this.roleService.create(roleDto);
-            res.status(200).send(role);
+            res.status(201).send(role);
         } catch (e) {
             next(e);
         }
@@ -43,7 +63,7 @@ class RoleController {
             const roles = await this.roleService.findOneByID(
                 parseInt(req.params.id)
             );
-            res.status(200).send(roles);
+            res.status(201).send(roles);
         } catch (e) {
             next(e);
         }
@@ -60,7 +80,7 @@ class RoleController {
                 parseInt(req.params.id),
                 updatedroleDto
             );
-            res.status(200).send(roles);
+            res.status(201).send(roles);
         } catch (e) {
             next(e);
         }
@@ -68,7 +88,7 @@ class RoleController {
 
     delete = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            await this.roleService.findOneByID(parseInt(req.params.id));
+            await this.roleService.delete(parseInt(req.params.id));
             res.status(200).send("Role deleted successfully");
         } catch (e) {
             next(e);

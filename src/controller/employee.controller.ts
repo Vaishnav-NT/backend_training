@@ -6,7 +6,6 @@ import { validate } from "class-validator";
 import ValidationException from "../exception/validation.exception";
 import authenticateMiddleware from "../middleware/authenticate.middleware";
 import authorize from "../middleware/authorize.middleware";
-import { RoleEnum } from "../utils/role.enum";
 import UpdateEmployeeDto from "../dto/updateEmployee.dto";
 import LoginEmployeeDto from "../dto/loginEmployee.dto";
 
@@ -19,7 +18,8 @@ import LoginEmployeeDto from "../dto/loginEmployee.dto";
 // handle all exceptions
 // logging with winston to a  file
 // env
-//
+// remove uneccesary async await
+// cascade for dept, role
 
 class EmployeeController {
     public router: express.Router;
@@ -29,29 +29,23 @@ class EmployeeController {
 
         this.router.post(
             "/",
-            // authenticateMiddleware,
-            // authorize([Role.HR]),
+            authenticateMiddleware,
+            authorize(["admin"]),
             this.create
         );
         this.router.post("/login", this.loginEmployee);
-        this.router.get("/", this.find); // authenticateMiddleware,
-        this.router.get("/:id", this.findOneById); // authenticateMiddleware,
-        // this.router.put(
-        //     "/:id",
-        //     // authenticateMiddleware,
-        //     // authorize([Role.HR]),
-        //     this.put
-        // );
+        this.router.get("/", authenticateMiddleware, this.find);
+        this.router.get("/:id", authenticateMiddleware, this.findOneById);
         this.router.patch(
             "/:id",
-            // authenticateMiddleware,
-            // authorize([Role.HR]),
+            authenticateMiddleware,
+            authorize(["admin"]),
             this.patch
         );
         this.router.delete(
             "/:id",
-            // authenticateMiddleware,
-            // authorize([Role.HR]),
+            authenticateMiddleware,
+            authorize(["admin"]),
             this.delete
         );
     }
@@ -122,31 +116,6 @@ class EmployeeController {
             next(e);
         }
     };
-
-    // put = async (
-    //     req: express.Request,
-    //     res: express.Response,
-    //     next: NextFunction
-    // ) => {
-    //     try {
-    //         const employeeDto = plainToInstance(EmployeeDto, req.body);
-    //         const errors = await validate(employeeDto);
-    //         if (errors.length > 0) {
-    //             throw new ValidationException(errors);
-    //         }
-    //         const employee = await this.employeeService.put(
-    //             parseInt(req.params.id),
-    //             {
-    //                 name: employeeDto.name,
-    //                 email: employeeDto.email,
-    //                 address: employeeDto.address,
-    //             }
-    //         );
-    //         res.status(201).send(employee);
-    //     } catch (e) {
-    //         next(e);
-    //     }
-    // };
 
     patch = async (
         req: express.Request,
