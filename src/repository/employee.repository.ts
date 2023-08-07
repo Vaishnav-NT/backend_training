@@ -20,15 +20,15 @@ class EmployeeRepository {
         });
     }
 
-    count(): Promise<number> {
-        return this.employeeRepository.count({
-            relations: {
-                address: true,
-                department: true,
-                role: true,
-            },
-        });
-    }
+    // count(): Promise<number> {
+    //     return this.employeeRepository.count({
+    //         relations: {
+    //             address: true,
+    //             department: true,
+    //             role: true,
+    //         },
+    //     });
+    // }
 
     findOneById(id: number): Promise<Employee> {
         return this.employeeRepository.findOne({

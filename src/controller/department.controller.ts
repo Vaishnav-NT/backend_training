@@ -72,7 +72,7 @@ class DepartmentController {
     ) => {
         try {
             req.startTime = new Date();
-            const [departments, count] = await this.departmentService.find();
+            const departments = await this.departmentService.find();
             FormattedResponse.send(req, res, 200, departments);
         } catch (e) {
             next(e);

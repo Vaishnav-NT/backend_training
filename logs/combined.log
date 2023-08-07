@@ -76,3 +76,41 @@
 2023-08-07 15:23:07 info: ed0b1bde-4b3e-4c2c-81ad-45743c12af77 POST: /api/employees
 2023-08-07 16:19:56 info: 6428e153-c701-48b0-92a1-7f9f3ae17c2d POST: /api/employees
 2023-08-07 16:47:54 info: 8445b7e2-5fc9-4a23-ba8d-dcd5fd109657 POST: /api/employees
+2023-08-07 17:55:19 info: b28e914e-d1e1-4fa5-a5bc-8cdaf5a07203 GET: /api/employees/31
+2023-08-07 17:55:19 error: TokenExpiredError: jwt expired
+    at /home/vyshnav/Desktop/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/vyshnav/Desktop/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/vyshnav/Desktop/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at authenticateMiddleware (/home/vyshnav/Desktop/backend/dist/middleware/authenticate.middleware.js:10:48)
+    at Layer.handle [as handle_request] (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/vyshnav/Desktop/backend/node_modules/express/lib/router/index.js:284:15
+    at param (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/index.js:365:14)
+2023-08-07 17:55:26 info: 2af95f18-beae-4013-bb33-aefe8020280d POST: /api/employees/login
+2023-08-07 17:55:51 info: c998751f-97de-4f53-ac30-43a8dc9d0f82 GET: /api/employees/31
+2023-08-07 17:56:03 info: 00eda38c-7c19-472c-9d2e-6fe17f9e0f01 GET: /api/employees
+2023-08-07 17:56:13 info: 61cb63fb-05a1-4488-b123-127a5801a5a4 PATCH: /api/employees/31
+2023-08-07 17:56:36 info: 90a0c2da-cf5a-45bc-bb72-294da2509473 DELETE: /api/employees/39
+2023-08-07 17:56:44 info: c469d4b1-cb80-44bb-941d-25eb1685f287 GET: /api/departments/5
+2023-08-07 17:57:02 info: e9993f95-cf68-4c2b-abfe-e3830c6a0d4b POST: /api/departments
+2023-08-07 17:57:07 info: dce81d52-c275-44d2-ad08-b6126fae44e5 GET: /api/departments/5
+2023-08-07 17:57:22 info: f2cadf17-b668-4db9-b8f4-727c487d7586 GET: /api/departments
+2023-08-07 17:57:30 info: 8ba8687b-f167-4663-80b1-8a680b7463c7 GET: /api/departments
+2023-08-07 17:57:39 info: 45443487-8bac-41d2-ba63-0d6862104ff1 GET: /api/departments
+2023-08-07 17:57:40 info: 20b92c95-8a2b-4b1e-be65-7ab5bad6d08f GET: /api/departments
+2023-08-07 17:57:44 info: b23027fa-70b9-4f65-a6d3-6655ce789531 GET: /api/departments/5
+2023-08-07 18:02:07 info: 0720ea2e-9387-4d73-b6b8-e89bd0666580 POST: /api/departments
+2023-08-07 18:02:08 info: 8e008cfa-f414-43f1-92c0-20ad43611618 POST: /api/departments
+2023-08-07 18:02:13 info: 294098e7-7fe7-4bdc-8752-9e7f952ec2bb GET: /api/departments
+2023-08-07 18:02:21 info: ba649cff-450d-4285-92b0-496ec7875f1c DELETE: /api/departments/10
+2023-08-07 18:02:27 info: 42b827fa-a12a-47b9-acb9-65b32ed08dc3 DELETE: /api/departments/11
+2023-08-07 18:03:06 info: 9646e324-fd09-453d-843f-e8b4c5926212 PUT: /api/departments/5
+2023-08-07 18:03:13 info: 605ae456-df67-429f-b718-1581797e008d GET: /api/roles
+2023-08-07 18:03:18 info: 5d2bc88e-7a2c-4336-8253-e375ab0c4a8d GET: /api/roles/4
+2023-08-07 18:03:18 error: HTTP Exception: No roles found with 4
+    at RoleService.<anonymous> (/home/vyshnav/Desktop/backend/dist/service/role.service.js:50:23)
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/vyshnav/Desktop/backend/dist/service/role.service.js:5:58)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
