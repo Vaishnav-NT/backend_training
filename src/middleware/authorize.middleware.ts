@@ -8,7 +8,7 @@ const authorize = (roles: string[]) => {
             const role = req.role;
             if (!roles.includes(role)) {
                 throw new HttpException(
-                    403,
+                    401,
                     "You are not authorized to perform this action"
                 );
             }

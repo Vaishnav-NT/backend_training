@@ -14,9 +14,6 @@ class DepartmentService {
 
     find = async (): Promise<Department[]> => {
         const departments = await this.departmentRepository.find();
-        if (!departments) {
-            throw new HttpException(404, `No departments present`);
-        }
         return departments;
     };
 

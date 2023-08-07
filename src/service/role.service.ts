@@ -13,10 +13,7 @@ class RoleService {
     }
 
     async find(): Promise<Role[]> {
-        const roles = await this.roleRepository.find();
-        if (!roles) {
-            throw new HttpException(404, `No roles found`);
-        }
+        const roles = await this.roleRepository.find(
         return roles;
     }
 

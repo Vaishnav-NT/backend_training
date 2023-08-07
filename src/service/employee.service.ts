@@ -63,11 +63,11 @@ class EmployeeService {
             loginData.username
         );
         if (!employee) {
-            throw new HttpException(400, "Employee not found");
+            throw new HttpException(404, "Employee not found");
         }
         const result = bcrypt.compare(loginData.password, employee.password);
         if (!result) {
-            throw new HttpException(401, "Incorrect username or password");
+            throw new HttpException(400, "Incorrect username or password");
         }
         console.log(employee.role.name);
 
@@ -96,9 +96,6 @@ class EmployeeService {
 
     async find(): Promise<Employee[]> {
         const employees = await this.employeeRepository.find();
-        if (!employees) {
-            throw new HttpException(404, "No employee present");
-        }
         return employees;
     }
 
