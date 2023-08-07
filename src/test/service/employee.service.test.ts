@@ -3,6 +3,7 @@ import EmployeeRepository from "../../repository/employee.repository";
 import Employee from "../../entity/employee.entity";
 import EmployeeService from "../../service/employee.service";
 import { when } from "jest-when";
+import UpdateEmployeeDto from "../../dto/updateEmployee.dto";
 
 describe("Employee service tests", () => {
     let employeeService: EmployeeService;
@@ -21,23 +22,21 @@ describe("Employee service tests", () => {
         test("test employee for id 1", async () => {
             const mockedFunction = jest.fn();
             const mockData = {
-                id: 20,
-                createdAt: new Date("2023-08-04T03:13:09.449Z"),
-                updatedAt: new Date("2023-08-04T03:13:09.449Z"),
-                deletedAt: null,
+                id: 1,
                 name: "John Newman",
-                email: "john@mail.com",
-                age: null,
-                password:
-                    "$2b$10$V3PqZiOnyewT/Y6ai8Q9QeHv1A7TVe1pUQE0PQocDNKpSlBnrvAN.",
-                role: "UI",
+                username: "jo",
+                role: {
+                    id: 1,
+                    name: "admin",
+                },
+                department: {
+                    id: 1,
+                    name: "HR",
+                },
                 address: {
-                    id: 19,
-                    createdAt: new Date("2023-08-04T03:13:09.449Z"),
-                    updatedAt: new Date("2023-08-04T03:13:09.449Z"),
-                    deletedAt: null,
-                    line1: "adress line one",
-                    line2: null,
+                    id: 1,
+                    line1: "line one",
+                    line2: "line 2",
                     pincode: "686691",
                 },
             };
@@ -56,10 +55,78 @@ describe("Employee service tests", () => {
         });
     });
 
-    describe("Get all employee", () => {
-        test("Should return users", async () => {
-            const spy = jest.spyOn(employeeRepository, "find");
-            expect(spy).toBeCalledTimes(1);
+    describe("Tests for get all employees", () => {
+        test("When employees are present", async () => {
+            const mockedFunction = jest.fn();
+            const mockData = [
+                {
+                    id: 1,
+                    name: "John Newman",
+                    username: "jo",
+                },
+                {
+                    id: 2,
+                    name: "John Newman",
+                    username: "jo",
+                },
+            ];
+            when(mockedFunction)
+                .calledWith()
+                .mockReturnValueOnce([
+                    {
+                        id: 1,
+                        name: "John Newman",
+                        username: "jo",
+                    },
+                    {
+                        id: 2,
+                        name: "John Newman",
+                        username: "jo",
+                    },
+                ]);
+            employeeRepository.find = mockedFunction;
+            const result = async () => await employeeService.find();
+            expect(result).resolves.toStrictEqual([
+                {
+                    id: 1,
+                    name: "John Newman",
+                    username: "jo",
+                },
+                {
+                    id: 1,
+                    name: "John Newman",
+                    username: "jo",
+                },
+            ]);
+        });
+
+        test("No employees present", async () => {
+            const mockedFunction = jest.fn();
+            when(mockedFunction).calledWith().mockReturnValueOnce(null);
+            employeeRepository.find = mockedFunction;
+            const result = async () => await employeeService.find();
+            expect(result).rejects.toThrowError();
         });
     });
+
+    describe("Tests to update an employee details", () => {
+        test("When employees is present", async () => {
+            const mockedFunction = jest.fn();
+            employeeRepository.patch = mockedFunction;
+            when(mockedFunction)
+                .calledWith({ id: 1, name: "John", experience: 8 })
+                .mockReturnValueOnce({
+                    id: 1,
+                    name: "John",
+                    experience: 8,
+                });
+        });
+    });
+
+    // describe("Get all employee", () => {
+    //     test("Should return users", async () => {
+    //         const spy = jest.spyOn(employeeRepository, "find");
+    //         expect(spy).toBeCalledTimes(1);
+    //     });
+    // });
 });

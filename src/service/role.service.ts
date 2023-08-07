@@ -12,12 +12,12 @@ class RoleService {
         return this.roleRepository.create(role);
     }
 
-    async find(): Promise<[Role[], number]> {
-        const [roles, count] = await this.roleRepository.find();
+    async find(): Promise<Role[]> {
+        const roles = await this.roleRepository.find();
         if (!roles) {
             throw new HttpException(404, `No roles found`);
         }
-        return [roles, count];
+        return roles;
     }
 
     async findOneByName(name: string) {

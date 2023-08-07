@@ -8,8 +8,8 @@ class RoleRepository {
         return this.roleRepository.save(role);
     }
 
-    find(): Promise<[Role[], number]> {
-        return this.roleRepository.findAndCount();
+    find(): Promise<Role[]> {
+        return this.roleRepository.find();
     }
 
     findOneByName(name: string): Promise<Role> {

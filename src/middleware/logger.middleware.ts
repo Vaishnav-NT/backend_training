@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
+import buildLogger from "../utils/winstonLogger";
+import { randomUUID } from "crypto";
 
 const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    console.log(`${new Date()} --- ${req.url} --- ${req.method}`);
+    res.locals.traceID = randomUUID();
+    const logger = buildLogger();
+    logger.info(`${res.locals.traceID} ${req.method}: ${req.url}`);
     next();
 };
 

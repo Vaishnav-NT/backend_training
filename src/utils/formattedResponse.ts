@@ -1,5 +1,6 @@
 import express from "express";
 import { RequestWithStartTime } from "./requestWithStartTime";
+import HttpStatusMessages from "./httpStatusMessage";
 
 class FormattedResponse {
     static async send(
@@ -7,23 +8,24 @@ class FormattedResponse {
         res: express.Response,
         statusCode: number,
         data: Object = null,
-        count: number = 0,
         error: Object = null
     ) {
         const endTime = new Date();
-        const took = endTime.getTime() - req.startTime.getTime();
-        const msg = this.getMessageForStatusCode(statusCode);
+        const took =
+            req.startTime !== undefined
+                ? endTime.getTime() - req.startTime.getTime()
+                : 0;
+        const msg = HttpStatusMessages[statusCode];
         const responseData = {
             data: data,
             errors: error === null ? null : error["errors"],
             message: error === null ? msg : error["message"],
             meta: {
-                length: count,
+                length: Array.isArray(data) ? data.length : 1,
                 took: took,
-                total: count,
+                total: Array.isArray(data) ? data.length : 1,
             },
         };
-        console.log(responseData);
         res.status(statusCode).send(responseData);
     }
 

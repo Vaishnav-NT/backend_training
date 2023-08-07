@@ -75,12 +75,20 @@ class EmployeeService {
         // return { token };
     };
 
-    async find(): Promise<[Employee[], number]> {
-        const [employees, count] = await this.employeeRepository.find();
+    // async find(): Promise<[Employee[], number]> {
+    //     const [employees, count] = await this.employeeRepository.find();
+    //     if (!employees) {
+    //         throw new HttpException(404, "No employee present");
+    //     }
+    //     return [employees, count];
+    // }
+
+    async find(): Promise<Employee[]> {
+        const employees = await this.employeeRepository.find();
         if (!employees) {
             throw new HttpException(404, "No employee present");
         }
-        return [employees, count];
+        return employees;
     }
 
     async findOneBy(id: number): Promise<Employee> {
@@ -101,7 +109,6 @@ class EmployeeService {
             throw new HttpException(404, `Employee not found with ${id}`);
         }
         employee[Object.keys(data)[0]] = data[Object.keys(data)[0]];
-        console.log(data);
         return this.employeeRepository.patch(employee);
     }
 

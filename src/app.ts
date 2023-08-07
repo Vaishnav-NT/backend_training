@@ -16,7 +16,6 @@ server.use(loggerMiddleware);
 server.use("/api/employees", employeeRoute);
 server.use("/api/departments", departmentRoute);
 server.use("/api/roles", roleRoute);
-
 server.use(errorHandlingMiddleware);
 
 (async () => {

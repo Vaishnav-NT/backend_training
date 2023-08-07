@@ -8,8 +8,8 @@ class DepartmentRepository {
         return this.departmentRepository.save(newDepartment);
     }
 
-    find(): Promise<[Department[], number]> {
-        return this.departmentRepository.findAndCount();
+    find(): Promise<Department[]> {
+        return this.departmentRepository.find();
     }
 
     findById(id: number): Promise<Department> {

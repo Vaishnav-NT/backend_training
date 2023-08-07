@@ -59,8 +59,6 @@ class DepartmentController {
             const department = await this.departmentService.create(
                 departmentDto
             );
-
-            // res.status(200).send(department);
             FormattedResponse.send(req, res, 201, department, 1);
         } catch (e) {
             next(e);
@@ -77,7 +75,7 @@ class DepartmentController {
             const [departments, count] = await this.departmentService.find();
 
             // res.status(200).send(departments);
-            FormattedResponse.send(req, res, 201, departments, 1); // count
+            FormattedResponse.send(req, res, 200, departments); // count
         } catch (e) {
             next(e);
         }
@@ -94,7 +92,7 @@ class DepartmentController {
                 parseInt(req.params.id)
             );
 
-            FormattedResponse.send(req, res, 200, department, 1);
+            FormattedResponse.send(req, res, 200, department);
             // res.status(200).send(department);
         } catch (e) {
             next(e);
@@ -122,8 +120,7 @@ class DepartmentController {
                 parseInt(req.params.id),
                 updateFUllDepartmentDto
             );
-            FormattedResponse.send(req, res, 201, updatedDepartment, 1);
-            // res.status(200).send(updatedDepartment);
+            FormattedResponse.send(req, res, 201, updatedDepartment);
         } catch (e) {
             next(e);
         }
@@ -151,8 +148,7 @@ class DepartmentController {
                 updateDepartmentDto
             );
 
-            FormattedResponse.send(req, res, 201, updatedDepartment, 1);
-            // res.status(200).send(updatedDepartment);
+            FormattedResponse.send(req, res, 201, updatedDepartment);
         } catch (e) {
             next(e);
         }
@@ -169,8 +165,7 @@ class DepartmentController {
                 parseInt(req.params.id)
             );
 
-            // res.status(201).send("Employee deleted successfully");
-            FormattedResponse.send(req, res, 200, department, 1);
+            FormattedResponse.send(req, res, 200, department);
         } catch (e) {
             next(e);
         }

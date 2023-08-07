@@ -51,8 +51,7 @@ class RoleController {
             }
             const role = await this.roleService.create(roleDto);
 
-            FormattedResponse.send(req, res, 201, role, 1);
-            // res.status(201).send(role);
+            FormattedResponse.send(req, res, 201, role);
         } catch (e) {
             next(e);
         }
@@ -67,7 +66,6 @@ class RoleController {
             req.startTime = new Date();
             const [roles, count] = await this.roleService.find();
             FormattedResponse.send(req, res, 200, roles, count);
-            // res.status(200).send(roles);
         } catch (e) {
             next(e);
         }
@@ -84,8 +82,7 @@ class RoleController {
                 parseInt(req.params.id)
             );
 
-            FormattedResponse.send(req, res, 200, role, 1);
-            // res.status(201).send(roles);
+            FormattedResponse.send(req, res, 200, role);
         } catch (e) {
             next(e);
         }
@@ -108,8 +105,7 @@ class RoleController {
                 updatedroleDto
             );
 
-            FormattedResponse.send(req, res, 201, updatedRole, 1);
-            // res.status(201).send(roles);
+            FormattedResponse.send(req, res, 201, updatedRole);
         } catch (e) {
             next(e);
         }
@@ -126,8 +122,7 @@ class RoleController {
                 parseInt(req.params.id)
             );
 
-            FormattedResponse.send(req, res, 200, deletdRole, 1);
-            // res.status(200).send("Role deleted successfully");
+            FormattedResponse.send(req, res, 200, deletdRole);
         } catch (e) {
             next(e);
         }

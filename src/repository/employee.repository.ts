@@ -8,8 +8,9 @@ class EmployeeRepository {
         return this.employeeRepository.save(newEmployee);
     }
 
-    find(): Promise<[Employee[], number]> {
-        return this.employeeRepository.findAndCount({
+    // "test": "jest --verbose",
+    find(): Promise<Employee[]> {
+        return this.employeeRepository.find({
             relations: {
                 address: true,
                 department: true,

@@ -11,14 +11,8 @@ import LoginEmployeeDto from "../dto/loginEmployee.dto";
 import FormattedResponse from "../utils/formattedResponse";
 import { RequestWithStartTime } from "../utils/requestWithStartTime";
 
-// to : make use of dto and recheck status codes
-// authorize dynamic
-// list of roles kittan api
-//keep format
+// tcheck status codes
 // 90% test coverage in services
-// C -> S -> R, S -> S
-// handle all exceptions
-// logging with winston to a  file
 // env
 // remove uneccesary async await
 // cascade for dept, role
@@ -70,7 +64,7 @@ class EmployeeController {
             const employee = await this.employeeService.create(
                 createEmployeeDto
             );
-            FormattedResponse.send(req, res, 201, employee, 1);
+            FormattedResponse.send(req, res, 201, employee);
         } catch (e) {
             next(e);
         }
@@ -87,7 +81,7 @@ class EmployeeController {
             const token = await this.employeeService.loginEmployee(
                 loinEmployeeDto
             );
-            FormattedResponse.send(req, res, 201, token, 1);
+            FormattedResponse.send(req, res, 200, token);
         } catch (e) {
             next(e);
         }
@@ -100,8 +94,8 @@ class EmployeeController {
     ) => {
         try {
             req.startTime = new Date();
-            const [employees, count] = await this.employeeService.find();
-            FormattedResponse.send(req, res, 200, employees, count);
+            const employees = await this.employeeService.find();
+            FormattedResponse.send(req, res, 200, employees);
         } catch (e) {
             next(e);
         }
@@ -117,7 +111,7 @@ class EmployeeController {
             const employee = await this.employeeService.findOneBy(
                 parseInt(req.params.id)
             );
-            FormattedResponse.send(req, res, 200, employee, 1);
+            FormattedResponse.send(req, res, 200, employee);
         } catch (e) {
             next(e);
         }
@@ -142,7 +136,7 @@ class EmployeeController {
                 parseInt(req.params.id),
                 updateEmployeeDto
             );
-            FormattedResponse.send(req, res, 201, employee, 1);
+            FormattedResponse.send(req, res, 201, employee);
         } catch (e) {
             next(e);
         }
@@ -158,7 +152,7 @@ class EmployeeController {
             const employee = await this.employeeService.delete(
                 parseInt(req.params.id)
             );
-            FormattedResponse.send(req, res, 200, employee, 1);
+            FormattedResponse.send(req, res, 200, employee);
         } catch (e) {
             next(e);
         }

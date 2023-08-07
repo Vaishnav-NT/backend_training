@@ -4,7 +4,7 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "test": "jest --verbose",
+        "test": "jest --verbose --setupFiles dotenv/config",
         "test-coverage": "jest --coverage",
         "build": "rm -rf dist && npx tsc && cp .env ./dist/.env",
         "start-server": "npm run build && node dist/app.js",
@@ -28,7 +28,8 @@
         "pg": "^8.11.2",
         "reflect-metadata": "^0.1.13",
         "typeorm": "^0.3.17",
-        "typeorm-naming-strategies": "^4.1.0"
+        "typeorm-naming-strategies": "^4.1.0",
+        "winston": "^3.10.0"
     },
     "devDependencies": {
         "@types/jest": "^29.5.3",

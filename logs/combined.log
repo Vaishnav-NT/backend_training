@@ -1,0 +1,39 @@
+2023-08-07 10:02:08 info: 4b670023-c2b8-4b72-8039-da8ae5d456fa GET: /api/employees
+2023-08-07 10:02:09 info: 2a47c8e7-1395-4561-9ad0-ffc83288aa3e GET: /api/employees
+2023-08-07 10:02:12 info: fee2115b-865f-4b82-a52a-acca66eb3f5f GET: /api/employees/31
+2023-08-07 10:02:15 info: 4a32c002-a386-4f65-8b36-cf392d36c4f4 POST: /api/employees
+2023-08-07 10:02:15 error: HTTP Exception: Validation Exception
+    at EmployeeController.<anonymous> (/home/vyshnav/Desktop/backend/dist/controller/employee.controller.js:39:27)
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/vyshnav/Desktop/backend/dist/controller/employee.controller.js:5:58)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2023-08-07 10:04:20 info: f1b3b09c-c0b1-48fc-af5b-7eb9ffaf8b26 POST: /api/employees
+2023-08-07 10:04:20 error: HTTP Exception: Validation Exception
+    at EmployeeController.<anonymous> (/home/vyshnav/Desktop/backend/dist/controller/employee.controller.js:39:27)
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/vyshnav/Desktop/backend/dist/controller/employee.controller.js:5:58)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2023-08-07 10:07:28 info: 7bb8bf48-1adf-41b1-8faa-7ca254820953 POST: /api/employees
+2023-08-07 10:07:28 error: HTTP Exception: Validation Exception
+    at EmployeeController.<anonymous> (/home/vyshnav/Desktop/backend/dist/controller/employee.controller.js:39:27)
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/vyshnav/Desktop/backend/dist/controller/employee.controller.js:5:58)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2023-08-07 11:05:04 info: 23df700c-4699-45de-85e8-9aae341c6791 POST: /api/employees/login
+2023-08-07 11:06:05 info: 3f1640a9-e08f-41a9-a288-23ffc0220f3e POST: /api/employees
+2023-08-07 11:06:05 error: HTTP Exception: Validation Exception
+    at EmployeeController.<anonymous> (/home/vyshnav/Desktop/backend/dist/controller/employee.controller.js:39:27)
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/vyshnav/Desktop/backend/dist/controller/employee.controller.js:5:58)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2023-08-07 11:06:13 info: 1dbe5d37-a67b-4a6b-bb35-0dabc75bbe35 POST: /api/employees
+2023-08-07 11:06:28 info: c3084ce3-9ae0-4282-93a7-d4321556bf30 GET: /api/employees/31
+2023-08-07 11:06:42 info: 65c2841c-2dd6-42a1-a756-ca0242b1861f GET: /api/employees
+2023-08-07 11:06:56 info: 69eb0419-dbf9-40ae-bfbe-c2b6e3b7d04e PATCH: /api/employees/31
+2023-08-07 11:07:04 info: 30b25253-4960-4cf8-a586-976d395ad35d GET: /api/departments/5
+2023-08-07 11:07:07 info: 7504803e-8fd3-42f8-998c-5eac46380596 GET: /api/departments
+2023-08-07 11:07:14 info: 032abc31-92e1-4768-87fd-e1d642a903f4 GET: /api/roles
+2023-08-07 11:27:33 info: c7ad1489-9268-4877-835f-d5799ecdd76d GET: /api/employees
+2023-08-07 11:28:33 info: 4b3d4821-d84a-4a03-a8b3-cc07d4850c8f GET: /api/employees
+2023-08-07 11:29:42 info: b538f709-32b1-4ca4-b9f2-67c3891e0afe GET: /api/employees
+2023-08-07 11:37:09 info: e9609033-a272-4f84-91f3-9392368d5de4 GET: /api/employees
