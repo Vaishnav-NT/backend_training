@@ -22,8 +22,8 @@ class Employee extends AbstractEntity {
     @Column()
     experience: number;
 
-    @Column()
-    activityStatus: boolean;
+    @Column({ default: activityStatusEnum.ACTIVE })
+    activityStatus: activityStatusEnum;
 
     @ManyToOne(() => Role, { nullable: true })
     role: Role;

@@ -46,21 +46,27 @@ class DepartmentService {
         return this.departmentRepository.patch(department);
     };
 
-    patch = async (
-        id: number,
-        departmentData: DepartmentDto
-    ): Promise<Department> => {
-        const department = await this.departmentRepository.findById(id);
-        if (!department) {
-            throw new HttpException(
-                404,
-                `A department with id ${id} does not exist`
-            );
-        }
-        department[Object.keys(departmentData)[0]] =
-            departmentData[Object.keys(departmentData)[0]];
-        return this.departmentRepository.patch(department);
-    };
+    // patch = async (
+    //     id: number,
+    //     departmentData: DepartmentDto
+    // ): Promise<Department> => {
+    //     const department = await this.departmentRepository.findById(id);
+    //     if (!department) {
+    //         throw new HttpException(
+    //             404,
+    //             `A department with id ${id} does not exist`
+    //         );
+    //     }
+
+    //     for (const k in departmentData)
+    //         if (!(k in department)) throw new HttpException(400, "Bad Request");
+
+    //     const updateDepartment = {
+    //         ...department,
+    //         ...(departmentData as unknown as Department),
+    //     };
+    //     return this.departmentRepository.patch(department);
+    // };
 
     delete = async (id: number) => {
         const department = await this.departmentRepository.findById(id);
@@ -73,9 +79,9 @@ class DepartmentService {
         return this.departmentRepository.delete(department);
     };
 
-    async count(): Promise<number> {
-        return await this.departmentRepository.count();
-    }
+    // async count(): Promise<number> {
+    //     return await this.departmentRepository.count();
+    // }
 }
 
 export default DepartmentService;

@@ -1,6 +1,6 @@
 import express from "express";
 import { RequestWithStartTime } from "./requestWithStartTime";
-import HttpStatusMessages from "./httpStatusMessage";
+import HttpStatusMessages from "./httpStatusMessages";
 
 class FormattedResponse {
     static async send(

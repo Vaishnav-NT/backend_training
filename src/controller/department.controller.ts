@@ -30,12 +30,12 @@ class DepartmentController {
             authorize(["admin"]),
             this.put
         );
-        this.router.patch(
-            "/:id",
-            authenticateMiddleware,
-            authorize(["admin"]),
-            this.patch
-        );
+        // this.router.patch(
+        //     "/:id",
+        //     authenticateMiddleware,
+        //     authorize(["admin"]),
+        //     this.patch
+        // );
         this.router.delete(
             "/:id",
             authenticateMiddleware,
@@ -73,9 +73,7 @@ class DepartmentController {
         try {
             req.startTime = new Date();
             const [departments, count] = await this.departmentService.find();
-
-            // res.status(200).send(departments);
-            FormattedResponse.send(req, res, 200, departments); // count
+            FormattedResponse.send(req, res, 200, departments);
         } catch (e) {
             next(e);
         }
@@ -93,7 +91,6 @@ class DepartmentController {
             );
 
             FormattedResponse.send(req, res, 200, department);
-            // res.status(200).send(department);
         } catch (e) {
             next(e);
         }
@@ -120,39 +117,39 @@ class DepartmentController {
                 parseInt(req.params.id),
                 updateFUllDepartmentDto
             );
-            FormattedResponse.send(req, res, 201, updatedDepartment);
+            FormattedResponse.send(req, res, 200, updatedDepartment);
         } catch (e) {
             next(e);
         }
     };
 
-    patch = async (
-        req: RequestWithStartTime,
-        res: Response,
-        next: NextFunction
-    ) => {
-        try {
-            req.startTime = new Date();
-            const updateDepartmentDto = plainToInstance(
-                UpdateDepartmentDto,
-                req.body
-            );
-            const errors: ValidationError[] = await validate(
-                UpdateDepartmentDto
-            );
-            if (errors.length > 0) {
-                throw new ValidationException(errors);
-            }
-            const updatedDepartment = await this.departmentService.patch(
-                parseInt(req.params.id),
-                updateDepartmentDto
-            );
+    // patch = async (
+    //     req: RequestWithStartTime,
+    //     res: Response,
+    //     next: NextFunction
+    // ) => {
+    //     try {
+    //         req.startTime = new Date();
+    //         const updateDepartmentDto = plainToInstance(
+    //             UpdateDepartmentDto,
+    //             req.body
+    //         );
+    //         const errors: ValidationError[] = await validate(
+    //             UpdateDepartmentDto
+    //         );
+    //         if (errors.length > 0) {
+    //             throw new ValidationException(errors);
+    //         }
+    //         const updatedDepartment = await this.departmentService.patch(
+    //             parseInt(req.params.id),
+    //             updateDepartmentDto
+    //         );
 
-            FormattedResponse.send(req, res, 201, updatedDepartment);
-        } catch (e) {
-            next(e);
-        }
-    };
+    //         FormattedResponse.send(req, res, 201, updatedDepartment);
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // };
 
     delete = async (
         req: RequestWithStartTime,
@@ -165,7 +162,7 @@ class DepartmentController {
                 parseInt(req.params.id)
             );
 
-            FormattedResponse.send(req, res, 200, department);
+            FormattedResponse.send(req, res, 204, department);
         } catch (e) {
             next(e);
         }

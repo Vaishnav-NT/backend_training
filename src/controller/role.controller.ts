@@ -105,7 +105,7 @@ class RoleController {
                 updatedroleDto
             );
 
-            FormattedResponse.send(req, res, 201, updatedRole);
+            FormattedResponse.send(req, res, 200, updatedRole);
         } catch (e) {
             next(e);
         }
@@ -122,7 +122,7 @@ class RoleController {
                 parseInt(req.params.id)
             );
 
-            FormattedResponse.send(req, res, 200, deletdRole);
+            FormattedResponse.send(req, res, 204, deletdRole);
         } catch (e) {
             next(e);
         }

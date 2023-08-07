@@ -64,6 +64,7 @@ class EmployeeController {
             const employee = await this.employeeService.create(
                 createEmployeeDto
             );
+            console.log(employee);
             FormattedResponse.send(req, res, 201, employee);
         } catch (e) {
             next(e);
@@ -136,7 +137,7 @@ class EmployeeController {
                 parseInt(req.params.id),
                 updateEmployeeDto
             );
-            FormattedResponse.send(req, res, 201, employee);
+            FormattedResponse.send(req, res, 200, employee);
         } catch (e) {
             next(e);
         }
@@ -152,7 +153,7 @@ class EmployeeController {
             const employee = await this.employeeService.delete(
                 parseInt(req.params.id)
             );
-            FormattedResponse.send(req, res, 200, employee);
+            FormattedResponse.send(req, res, 204, employee);
         } catch (e) {
             next(e);
         }

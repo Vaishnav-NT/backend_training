@@ -8,30 +8,40 @@ import EmployeeDto from "../dto/employee.dto";
 import { jwtPayload } from "../utils/jwtPayload.type";
 import UpdateEmployeeDto from "../dto/updateEmployee.dto";
 import LoginEmployeeDto from "../dto/loginEmployee.dto";
-import { roleService } from "../route/role.route";
-import { departmentService } from "../route/department.route";
+// import { roleService } from "../route/role.route";
+// import { departmentService } from "../route/department.route";
+import { activityStatusEnum } from "../utils/activityStatus.enum";
+import RoleService from "./role.service";
+import DepartmentService from "./department.service";
 
 class EmployeeService {
-    constructor(private employeeRepository: EmployeeRepository) {}
+    constructor(
+        private employeeRepository: EmployeeRepository,
+        private roleService: RoleService,
+        private departmentService: DepartmentService
+    ) {}
 
     async create(employeeData: EmployeeDto): Promise<Employee> {
+        console.log(employeeData);
         const newEmployee = new Employee();
         newEmployee.name = employeeData.name;
         newEmployee.username = employeeData.username;
         newEmployee.password = await hash(employeeData.password, 10);
         newEmployee.joiningDate = employeeData.joiningDate;
         newEmployee.experience = employeeData.experience;
-        newEmployee.activityStatus = true;
+        newEmployee.activityStatus = activityStatusEnum.ACTIVE;
 
         if (employeeData.departmentId) {
-            const department = await departmentService.findOneById(
+            const department = await this.departmentService.findOneById(
                 parseInt(employeeData.departmentId)
             );
             newEmployee.department = department;
         }
 
         if (employeeData.role !== undefined) {
-            const role = await roleService.findOneByName(employeeData.role);
+            const role = await this.roleService.findOneByName(
+                employeeData.role
+            );
             newEmployee.role = role;
         }
 
@@ -44,6 +54,7 @@ class EmployeeService {
         newAddress.pincode = employeeData.address.pincode;
         newEmployee.address = newAddress;
 
+        ///console.log(newEmployee);
         return this.employeeRepository.create(newEmployee);
     }
 
@@ -99,17 +110,25 @@ class EmployeeService {
         return employee;
     }
 
-    async count(): Promise<number> {
-        return await this.employeeRepository.count();
-    }
+    // async count(): Promise<number> {
+    //     return await this.employeeRepository.count();
+    // }
 
     async patch(id: number, data: UpdateEmployeeDto): Promise<Employee> {
         const employee = await this.employeeRepository.findOneById(id);
         if (!employee) {
             throw new HttpException(404, `Employee not found with ${id}`);
         }
-        employee[Object.keys(data)[0]] = data[Object.keys(data)[0]];
-        return this.employeeRepository.patch(employee);
+
+        for (const k in data)
+            if (!(k in employee)) throw new HttpException(400, "Bad Request");
+
+        const updatedEmployee = {
+            ...employee,
+            ...(data as unknown as Employee),
+        };
+
+        return await this.employeeRepository.patch(updatedEmployee);
     }
 
     async delete(id: number): Promise<Employee> {
@@ -117,7 +136,7 @@ class EmployeeService {
         if (!employee) {
             throw new HttpException(404, `Employee not found with ${id}`);
         }
-        return this.employeeRepository.delete(employee);
+        return await this.employeeRepository.delete(employee);
     }
 }
 

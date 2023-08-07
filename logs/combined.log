@@ -37,3 +37,42 @@
 2023-08-07 11:28:33 info: 4b3d4821-d84a-4a03-a8b3-cc07d4850c8f GET: /api/employees
 2023-08-07 11:29:42 info: b538f709-32b1-4ca4-b9f2-67c3891e0afe GET: /api/employees
 2023-08-07 11:37:09 info: e9609033-a272-4f84-91f3-9392368d5de4 GET: /api/employees
+2023-08-07 13:22:18 info: 3fbdc99f-d5e7-4c59-8a71-7119c02e01ee PATCH: /api/employees/31
+2023-08-07 13:22:18 error: TokenExpiredError: jwt expired
+    at /home/vyshnav/Desktop/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/vyshnav/Desktop/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/vyshnav/Desktop/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at authenticateMiddleware (/home/vyshnav/Desktop/backend/dist/middleware/authenticate.middleware.js:10:48)
+    at Layer.handle [as handle_request] (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/vyshnav/Desktop/backend/node_modules/express/lib/router/index.js:284:15
+    at param (/home/vyshnav/Desktop/backend/node_modules/express/lib/router/index.js:365:14)
+2023-08-07 13:22:31 info: 75af05fa-7c84-4c6c-b3be-c4356418a90d POST: /api/employees/login
+2023-08-07 13:23:04 info: 1e0202ef-59e3-4811-af54-2d9843a876f9 PATCH: /api/employees/31
+2023-08-07 13:25:58 info: 9f753567-f2a9-4e6c-8c8b-c03b9c50e096 PATCH: /api/employees/31
+2023-08-07 13:26:08 info: 785d3ff9-f0ab-4abe-b540-6ad2029ab45c PATCH: /api/employees/31
+2023-08-07 13:26:16 info: 70566d8b-033e-4a2f-ac67-a9ddb6a83d2e PATCH: /api/employees/31
+2023-08-07 13:28:39 info: fcec1939-d4e9-4fdf-a837-0b287ab68eb1 GET: /api/employees/31
+2023-08-07 13:39:46 info: d21669d0-f4d5-4961-8f84-6849df9b46d7 PATCH: /api/employees/31
+2023-08-07 13:41:15 info: fe149b82-9f6c-4fa3-aa73-7e33a0fae6c2 PATCH: /api/employees/31
+2023-08-07 13:43:02 info: e542a424-9fc9-448b-ac00-9e5a3583bc47 PATCH: /api/employees/31
+2023-08-07 13:43:18 info: cd7d5b32-ceea-4750-93aa-62f12e402476 GET: /api/employees/31
+2023-08-07 13:52:19 info: 2e64aa0b-dea2-4e24-9b93-e3eda7eaf472 GET: /api/employees/31
+2023-08-07 13:52:29 info: a7ced5a1-0b7f-4cdf-bb5a-383c00fb5e6a PATCH: /api/employees/31
+2023-08-07 13:54:14 error: SyntaxError: Unexpected string in JSON at position 25
+    at JSON.parse (<anonymous>)
+    at parse (/home/vyshnav/Desktop/backend/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/vyshnav/Desktop/backend/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:203:9)
+    at invokeCallback (/home/vyshnav/Desktop/backend/node_modules/raw-body/index.js:231:16)
+    at done (/home/vyshnav/Desktop/backend/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/vyshnav/Desktop/backend/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (node:events:514:28)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2023-08-07 13:54:21 info: 425a2a6a-6b59-448b-9a97-c8ff2865b02d PATCH: /api/employees/31
+2023-08-07 15:23:07 info: ed0b1bde-4b3e-4c2c-81ad-45743c12af77 POST: /api/employees
+2023-08-07 16:19:56 info: 6428e153-c701-48b0-92a1-7f9f3ae17c2d POST: /api/employees
+2023-08-07 16:47:54 info: 8445b7e2-5fc9-4a23-ba8d-dcd5fd109657 POST: /api/employees

@@ -17,13 +17,24 @@ describe("Role service tests", () => {
         roleService = new RoleService(roleRepository);
     });
 
-    describe("Tests for getting list of all roles", () => {
-        test("No roles present", async () => {
+    describe("Tests for get all department", () => {
+        test("When department exists", async () => {
             const mockedFunction = jest.fn();
-            when(mockedFunction).calledWith().mockResolvedValueOnce([]);
+            const mockData = [
+                {
+                    id: 1,
+                    name: "admin",
+                },
+            ];
+            when(mockedFunction).calledWith().mockResolvedValueOnce(mockData);
             roleRepository.find = mockedFunction;
-            const result = async () => await roleService.find();
-            expect(result).rejects.toThrowError();
+            const role = await roleService.find();
+            expect(role).toMatchObject([
+                {
+                    id: 1,
+                    name: "admin",
+                },
+            ]);
         });
     });
 });

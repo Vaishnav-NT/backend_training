@@ -5,6 +5,7 @@ class EmployeeRepository {
     constructor(private employeeRepository: Repository<Employee>) {}
 
     create(newEmployee: Employee): Promise<Employee> {
+        console.log("\n\n\n", newEmployee);
         return this.employeeRepository.save(newEmployee);
     }
 
